@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TXHook</string>
+    <string name="tab_analyse">分析</string>
+    <string name="catching_info">抓包信息</string>
+    <string name="base_info">基础信息</string>
+    <string name="info">信息</string>
+    <string name="jsonViewer_icon_plus">expand</string>
+    <string name="jsonViewer_icon_minus">collapse</string>
+    <string name="analyse_jce_protobuf">Jce/Protobuf解析</string>
+    <string name="clear_all">清空</string>
+    <string name="back">返回</string>
+    <string name="input_search">请输入要搜索的CMD</string>
+    <string name="catch_content">抓包内容：</string>
+    <string name="start_catch">点击右下角按钮开始抓包</string>
+    <string name="cancel">取消</string>
+    <string name="hex">Hex字节查看</string>
+    <string name="jce">JCE</string>
+    <string name="protobuf">Protobuf</string>
+    <string name="pushapi">PUSH开关</string>
+    <string name="local_address">192.168.31.63:6779</string>
+    <string name="none_data">没有任何数据</string>
+    <string name="merge">merge</string>
+    <string name="noData">暂无数据</string>
+    <string name="imqq">I’m QQ，每一天，乐在沟通。</string>
+</resources>

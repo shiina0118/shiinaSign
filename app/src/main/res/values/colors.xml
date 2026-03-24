@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary">#FFFFFFFF</color>
+    <color name="primary_dark">#FFFFFFFF</color>
+    <color name="accent">#696969</color>
+    <color name="accentFallback">#757575</color>
+
+    <color name="red500">#F44336</color>
+    <color name="blue500">#2196f3</color>
+
+    <!-- Flashing colors -->
+
+    <color name="ic_launcher_background">#00B0FF</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- 原创配色 -->
+    <color name="tx_appbar_color">#03A9F4</color>
+    <color name="tx_bt_color">#48C3FB</color>
+
+    <color name="tx_merge">#FF9100</color>
+
+    <color name="tx_base_info">#D3D3D3</color>
+
+</resources>

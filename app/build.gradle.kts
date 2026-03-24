@@ -7,16 +7,18 @@ plugins {
 repositories {
     google()
     mavenCentral()
+    maven("https://api.xposed.info/")
+    maven("https://jitpack.io")
 }
 
 android {
     namespace = "com.shiinasign"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.shiinasign"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -46,26 +48,27 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.core:core-ktx:1.17.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.13.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation("org.nanohttpd:nanohttpd:2.3.1")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
     // Xposed API 本地 jar 依赖
     implementation(files("libs/XposedBridgeAPI-82.jar"))
     // Gson 依赖
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.13.2")
 
     // Protobuf 依赖
-    implementation("com.google.protobuf:protobuf-java:3.24.0")
+    implementation("com.google.protobuf:protobuf-java:4.32.1")
 
     // kotlinx.serialization 依赖
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.9.0")
 
     // OkHttp 依赖
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp:5.1.0")
 
     // kotlinx-io 依赖
     implementation("org.jetbrains.kotlinx:kotlinx-io-jvm:0.1.16")

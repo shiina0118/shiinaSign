@@ -1,83 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:fitsSystemWindows="true"
+    tools:context=".app.MainActivity"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:elevation="20dp"
+        android:background="@color/white">
 
-        <TextView
-            android:id="@+id/statusText"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="HTTP Server 未开启"
-            android:textSize="16sp"
-            android:paddingBottom="12dp" />
+            android:title="@string/app_name"
+            android:subtitle="I’m QQ，每一天，乐在沟通。"
+            app:titleTextColor="@android:color/black"
+            app:subtitleTextColor="@android:color/darker_gray"
+            app:titleMarginTop="10dp"
+            tools:ignore="HardcodedText" />
 
-        <LinearLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingBottom="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="端口：" />
-
-            <EditText
-                android:id="@+id/portInput"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:text="9999"
-                android:hint="1024-65535" />
-
-            <Switch
-                android:id="@+id/serverSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/signStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign 未调用"
-            android:paddingBottom="8dp" />
-
-        <EditText
-            android:id="@+id/dataInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="签名数据 data"
-            android:text="test_data" />
-
-        <EditText
-            android:id="@+id/saltInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="salt (hex)"
-            android:text="0000000000000000" />
-
-        <Button
-            android:id="@+id/callSignButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="调用 Getsign" />
-
-        <TextView
-            android:id="@+id/resultText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="结果" />
+            app:tabIndicatorHeight="3dp"
+            app:tabGravity="center"
+            app:tabIndicatorAnimationMode="linear"
+            app:tabMode="auto" />
 
     </LinearLayout>
-</ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="@color/accent"
+            app:borderWidth="0dp"
+            app:srcCompat="@drawable/icon_nocatch"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            tools:ignore="ContentDescription" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</LinearLayout>
