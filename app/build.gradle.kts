@@ -62,8 +62,10 @@ dependencies {
     // kotlinx.serialization 依赖
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
-    // EzXHelper 依赖
-    implementation("io.github.kyuubiran.ezxhelper:ezxhelper:2.1.0")
+    // EzXHelper 依赖 (3.x 拆分模块)
+    implementation("io.github.kyuubiran.ezxhelper:core:3.0.1")
+    implementation("io.github.kyuubiran.ezxhelper:xposed-api-82:3.0.1")
+    implementation("io.github.kyuubiran.ezxhelper:android-utils:3.0.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.6")
