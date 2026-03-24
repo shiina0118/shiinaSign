@@ -13,6 +13,8 @@ val hostContext: Context get() = hostApp
 val hostVersionCode: Long by lazy {
     runCatching {
         val pi = hostApp.packageManager.getPackageInfo(hostPackageName, 0)
-        pi?.let { android.os.Build.VERSION.SDK_INT >= 28 && it.longVersionCode } ?: 0L
+        if (pi != null) {
+            if (android.os.Build.VERSION.SDK_INT >= 28) pi.longVersionCode else pi.versionCode.toLong()
+        } else 0L
     }.getOrDefault(0L)
 }

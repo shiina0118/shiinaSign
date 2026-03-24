@@ -1,6 +1,5 @@
 package moe.ore.xposed.hook
 
-import de.robv.android.xposed.XposedBridge
 import moe.ore.xposed.hook.base.hostPackageName
 import moe.ore.xposed.hook.base.hostVersionCode
 import moe.ore.xposed.utils.QQ_9_2_10_29175
@@ -9,14 +8,12 @@ import moe.ore.xposed.utils.hookMethod
 
 /**
  * Anti-detection from TXHook.
- * Forces QQ to use WTLogin (legacy) protocol instead of NT protocol,
- * ensuring QQSecuritySign/Dandelion/ByteData signing APIs remain active.
+ * Disables QQ security switches that may interfere with signing APIs.
  */
 internal object AntiDetection {
 
     operator fun invoke() {
         disableSwitch()
-        isLoginByNTHook()
     }
 
     private fun disableSwitch() {
@@ -30,20 +27,8 @@ internal object AntiDetection {
                             param.result = false
                         }
                     }
-                    "wt_login_upgrade" -> {
-                        param.result = false
-                    }
-                    "nt_login_downgrade" -> {
-                        param.result = true
-                    }
                 }
             }
-        }
-    }
-
-    private fun isLoginByNTHook() {
-        load("mqq.app.MobileQQ")?.hookMethod("isLoginByNT")?.after { param ->
-            param.result = false
         }
     }
 
