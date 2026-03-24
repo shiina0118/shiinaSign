@@ -1,5 +1,7 @@
 package com.shiinasign.ui
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
@@ -8,18 +10,34 @@ import com.google.android.material.button.MaterialButton
 import com.shiinasign.R
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var prefs: SharedPreferences
+    private var serverRunning = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        prefs = getSharedPreferences("shiinasign", Context.MODE_PRIVATE)
 
         val etPort = findViewById<EditText>(R.id.et_port)
         val btnToggle = findViewById<MaterialButton>(R.id.btn_toggle)
         val tvStatus = findViewById<TextView>(R.id.tv_status)
 
-        tvStatus.text = "状态: Xposed 模块\n请在 LSPosed 中激活后启动 QQ"
+        etPort.setText(prefs.getInt("port", 7878).toString())
 
         btnToggle.setOnClickListener {
-            tvStatus.text = "状态: HTTP Server 已在 QQ 进程中启动\n请通过 POST http://localhost:7878/sign 调用"
+            if (serverRunning) {
+                serverRunning = false
+                btnToggle.text = "启动 HTTP Server"
+                tvStatus.text = "状态: 已停止"
+            } else {
+                val port = etPort.text.toString().toIntOrNull() ?: 7878
+                prefs.edit().putInt("port", port).apply()
+                serverRunning = true
+                btnToggle.text = "停止 HTTP Server"
+                tvStatus.text = "状态: HTTP Server 将在 QQ 启动后运行\n端口: $port\n\nPOST http://localhost:$port/sign\n参数: cmd, buffer(hex), seq, uin"
+            }
         }
     }
 }
