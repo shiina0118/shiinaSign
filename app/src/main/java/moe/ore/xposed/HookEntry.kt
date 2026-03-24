@@ -1,4 +1,4 @@
-package shiinaSign.xposed
+package moe.ore.xposed
 
 import android.content.res.XModuleResources
 import de.robv.android.xposed.IXposedHookLoadPackage
@@ -6,10 +6,10 @@ import de.robv.android.xposed.IXposedHookZygoteInit
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import io.github.kyuubiran.ezxhelper.android.logging.Logger
 import io.github.kyuubiran.ezxhelper.xposed.EzXposed
-import shiinaSign.xposed.base.LoadApp
-import shiinaSign.xposed.hook.base.modulePath
-import shiinaSign.xposed.hook.base.moduleRes
-import shiinaSign.xposed.hook.enums.QQTypeEnum
+import moe.ore.xposed.base.LoadApp
+import moe.ore.xposed.hook.base.modulePath
+import moe.ore.xposed.hook.base.moduleRes
+import moe.ore.xposed.hook.enums.QQTypeEnum
 
 const val TAG = "shiinaSign"
 

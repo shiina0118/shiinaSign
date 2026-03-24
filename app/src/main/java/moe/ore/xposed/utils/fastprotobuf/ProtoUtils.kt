@@ -98,7 +98,6 @@ object ProtoUtils {
             field.groupList.forEach {
                 val map = ProtoMap(hashMapOf())
                 printUnknownFieldSet(it, map)
-                dest[tag] = map
             }
         }
     }
