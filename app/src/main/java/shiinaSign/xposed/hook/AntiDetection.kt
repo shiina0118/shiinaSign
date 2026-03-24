@@ -1,12 +1,12 @@
-package shiinaSign.xposed.hook
+package moe.ore.xposed.hook
 
-import shiinaSign.xposed.hook.base.hostPackageName
-import shiinaSign.xposed.hook.base.hostVersionCode
-import shiinaSign.xposed.hook.enums.QQTypeEnum
-import shiinaSign.xposed.utils.QQ_9_1_90_26520
-import shiinaSign.xposed.utils.QQ_9_2_10_29175
-import shiinaSign.xposed.utils.XPClassloader.load
-import shiinaSign.xposed.utils.hookMethod
+import moe.ore.xposed.hook.base.hostPackageName
+import moe.ore.xposed.hook.base.hostVersionCode
+import moe.ore.xposed.hook.enums.QQTypeEnum
+import moe.ore.xposed.utils.QQ_9_1_90_26520
+import moe.ore.xposed.utils.QQ_9_2_10_29175
+import moe.ore.xposed.utils.XPClassloader.load
+import moe.ore.xposed.utils.hookMethod
 
 internal object AntiDetection {
 
