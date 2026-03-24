@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,8 +34,16 @@ jobs:
           name: build-log
           path: build.log
 
+      - name: List build outputs
+        if: always()
+        run: find app/build/outputs -name "*.apk" 2>/dev/null || echo "No APK found in outputs dir"
+
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: |
+            app/build/outputs/apk/**/*.apk
+            app/**/*.apk
+          if-no-files-found: warn
