@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization")
+    id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
 }
 
 repositories {
@@ -28,6 +28,10 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     kotlinOptions {
@@ -57,6 +61,9 @@ dependencies {
 
     // kotlinx.serialization 依赖
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    // EzXHelper 依赖
+    implementation("io.github.kyuubiran.ezxhelper:ezxhelper:2.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.6")
