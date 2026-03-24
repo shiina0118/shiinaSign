@@ -1,6 +1,9 @@
 package com.shiinasign.server
 
 import com.google.gson.Gson
+import com.shiinasign.xposed.DeviceInfo
+import com.shiinasign.xposed.QimeiHook
+import com.shiinasign.xposed.QimeiResult
 import de.robv.android.xposed.XposedBridge
 import fi.iki.elonen.NanoHTTPD
 
@@ -15,6 +18,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
     override fun serve(session: IHTTPSession): Response {
         return when (session.uri) {
             "/sign" -> handleSign(session)
+            "/qimei" -> handleQimei(session)
             "/ping" -> newFixedLengthResponse(Response.Status.OK, "application/json", """{"status":"ok"}""")
             else -> newFixedLengthResponse(Response.Status.NOT_FOUND, "application/json", """{"error":"not found"}""")
         }
@@ -65,6 +69,57 @@ class SignServer(port: Int) : NanoHTTPD(port) {
             newFixedLengthResponse(Response.Status.OK, "application/json", gson.toJson(response))
         } catch (e: Exception) {
             XposedBridge.log("[shiinaSign] sign error: ${e.message}")
+            newFixedLengthResponse(
+                Response.Status.INTERNAL_ERROR, "application/json",
+                """{"ret":-1,"error":"${e.message?.replace("\"", "\\\"") ?: "unknown"}"}"""
+            )
+        }
+    }
+
+    private fun handleQimei(session: IHTTPSession): Response {
+        session.parseBody(mapOf())
+
+        val params = session.parms
+
+        // Check if custom device info is provided
+        val hasDeviceInfo = params.keys.any { it in listOf(
+            "imei", "android_id", "mac", "model", "brand",
+            "manufacturer", "fingerprint", "boot_id", "proc_version",
+            "sdk_version", "display", "device", "board"
+        )}
+
+        return try {
+            val result: QimeiResult = if (hasDeviceInfo) {
+                // Generate with custom device info
+                val deviceInfo = DeviceInfo(
+                    imei = params["imei"] ?: "",
+                    androidId = params["android_id"] ?: "",
+                    mac = params["mac"] ?: "",
+                    model = params["model"] ?: "",
+                    brand = params["brand"] ?: "",
+                    manufacturer = params["manufacturer"] ?: "",
+                    fingerprint = params["fingerprint"] ?: "",
+                    bootId = params["boot_id"] ?: "",
+                    procVersion = params["proc_version"] ?: "",
+                    sdkVersion = params["sdk_version"] ?: "",
+                    display = params["display"] ?: "",
+                    device = params["device"] ?: "",
+                    board = params["board"] ?: ""
+                )
+                QimeiHook.generateQimei(deviceInfo)
+            } else {
+                // Get current QIMEI without custom info
+                QimeiHook.getCurrentQimei()
+            }
+
+            val response = mapOf(
+                "ret" to 0,
+                "qimei16" to (result.qimei16 ?: ""),
+                "qimei36" to (result.qimei36 ?: "")
+            )
+            newFixedLengthResponse(Response.Status.OK, "application/json", gson.toJson(response))
+        } catch (e: Exception) {
+            XposedBridge.log("[shiinaSign] qimei error: ${e.message}")
             newFixedLengthResponse(
                 Response.Status.INTERNAL_ERROR, "application/json",
                 """{"ret":-1,"error":"${e.message?.replace("\"", "\\\"") ?: "unknown"}"}"""

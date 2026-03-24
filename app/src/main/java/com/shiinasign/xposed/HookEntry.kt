@@ -96,6 +96,7 @@ class HookEntry : IXposedHookLoadPackage {
         XposedBridge.log("[shiinaSign] App startup detected: ${ctx.javaClass.name}, process: $hostProcessName")
 
         AntiDetection()
+        QimeiHook()
 
         XposedBridge.log("[shiinaSign] Starting sign server...")
         startSignServer()
