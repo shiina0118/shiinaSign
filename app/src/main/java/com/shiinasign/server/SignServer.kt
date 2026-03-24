@@ -16,6 +16,9 @@ class SignServer(port: Int) : NanoHTTPD(port) {
 
     private val gson = Gson()
 
+    private fun Map<String, List<String>>.param(key: String): String? =
+        this[key]?.firstOrNull()
+
     override fun serve(session: IHTTPSession): Response {
         return when (session.uri) {
             "/sign" -> handleSign(session)
@@ -29,10 +32,10 @@ class SignServer(port: Int) : NanoHTTPD(port) {
     private fun handleSign(session: IHTTPSession): Response {
         session.parseBody(mapOf())
         val params = session.parameters
-        val cmd = params["cmd"]
-        val bufferHex = params["buffer"]
-        val seqStr = params["seq"]
-        val uin = params["uin"]
+        val cmd = params.param("cmd")
+        val bufferHex = params.param("buffer")
+        val seqStr = params.param("seq")
+        val uin = params.param("uin")
 
         if (cmd.isNullOrEmpty() || bufferHex.isNullOrEmpty() || seqStr.isNullOrEmpty() || uin.isNullOrEmpty()) {
             return newFixedLengthResponse(
@@ -94,19 +97,19 @@ class SignServer(port: Int) : NanoHTTPD(port) {
             val result: QimeiResult = if (hasDeviceInfo) {
                 // Generate with custom device info
                 val deviceInfo = DeviceInfo(
-                    imei = params["imei"] ?: "",
-                    androidId = params["android_id"] ?: "",
-                    mac = params["mac"] ?: "",
-                    model = params["model"] ?: "",
-                    brand = params["brand"] ?: "",
-                    manufacturer = params["manufacturer"] ?: "",
-                    fingerprint = params["fingerprint"] ?: "",
-                    bootId = params["boot_id"] ?: "",
-                    procVersion = params["proc_version"] ?: "",
-                    sdkVersion = params["sdk_version"] ?: "",
-                    display = params["display"] ?: "",
-                    device = params["device"] ?: "",
-                    board = params["board"] ?: ""
+                    imei = params.param("imei") ?: "",
+                    androidId = params.param("android_id") ?: "",
+                    mac = params.param("mac") ?: "",
+                    model = params.param("model") ?: "",
+                    brand = params.param("brand") ?: "",
+                    manufacturer = params.param("manufacturer") ?: "",
+                    fingerprint = params.param("fingerprint") ?: "",
+                    bootId = params.param("boot_id") ?: "",
+                    procVersion = params.param("proc_version") ?: "",
+                    sdkVersion = params.param("sdk_version") ?: "",
+                    display = params.param("display") ?: "",
+                    device = params.param("device") ?: "",
+                    board = params.param("board") ?: ""
                 )
                 QimeiHook.generateQimei(deviceInfo)
             } else {
