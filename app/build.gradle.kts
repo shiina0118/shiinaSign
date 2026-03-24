@@ -46,6 +46,11 @@ dependencies {
     implementation("org.nanohttpd:nanohttpd:2.3.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
+    // Xposed API 依赖（如需其他版本请自行调整）
+    implementation("de.robv.android.xposed:api:82")
+    // Gson 依赖
+    implementation("com.google.code.gson:gson:2.10.1")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.6")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
