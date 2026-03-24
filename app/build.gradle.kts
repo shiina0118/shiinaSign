@@ -25,7 +25,6 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags += "-std=c11"
                 arguments += "-DANDROID_STL=c++_static"
             }
         }
