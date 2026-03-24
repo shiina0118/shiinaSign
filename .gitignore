@@ -18,6 +18,9 @@ local.properties
 QQHook-3.3.0/
 OpenShamrock-master/
 
+# Dobby source (cloned by CI/local setup, not committed)
+app/src/main/jni/dobby/
+
 # OS
 .DS_Store
 Thumbs.db
