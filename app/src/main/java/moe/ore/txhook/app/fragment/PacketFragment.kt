@@ -13,15 +13,15 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import moe.ore.android.Application.Companion.uiHandler
 import moe.ore.android.toast.Toast
 import moe.ore.android.util.AndroidUtil
-import moe.ore.txhook.R
+import com.shiinasign.R
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.MQQ
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.QIDIAN
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.QQLITE
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.TIM
 import moe.ore.txhook.app.ui.info.OnItemClickListener
-import moe.ore.txhook.databinding.FragmentHexBinding
-import moe.ore.txhook.databinding.FragmentPacketInfoBinding
-import moe.ore.txhook.databinding.FragmentParserBinding
+import com.shiinasign.databinding.FragmentHexBinding
+import com.shiinasign.databinding.FragmentPacketInfoBinding
+import com.shiinasign.databinding.FragmentParserBinding
 import moe.ore.txhook.helper.parser.ProtobufParser
 import moe.ore.txhook.helper.parser.TarsParser
 import moe.ore.txhook.helper.toByteReadPacket
@@ -59,7 +59,7 @@ class PacketHexFragment: Fragment() {
             hex = savedInstanceState?.getString("hex") ?: ""
         }
 
-        binding.info.text = "${size}字节 | 长按可复制"
+        binding.info.text = "${size}字节 | 长按可复�?
         binding.hex.text = hex
         binding.hex.typeface = ResourcesCompat.getFont(requireContext(), R.font.mono)
 

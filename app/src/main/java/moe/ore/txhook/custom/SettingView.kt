@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
-import moe.ore.txhook.R
+import com.shiinasign.R
 
 class SettingView @JvmOverloads constructor(
     context: Context,

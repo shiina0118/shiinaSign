@@ -9,10 +9,10 @@ import androidx.annotation.Nullable
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
-import moe.ore.txhook.R
-import moe.ore.txhook.databinding.DialogInputBinding
-import moe.ore.txhook.databinding.DialogListBinding
-import moe.ore.txhook.databinding.DialogTipsBinding
+import com.shiinasign.R
+import com.shiinasign.databinding.DialogInputBinding
+import com.shiinasign.databinding.DialogListBinding
+import com.shiinasign.databinding.DialogTipsBinding
 
 object Dialog {
     class EditTextAlertBuilder @JvmOverloads constructor(ctx: Context, @StyleRes themeId: Int = R.style.AppTheme_Dialog) :

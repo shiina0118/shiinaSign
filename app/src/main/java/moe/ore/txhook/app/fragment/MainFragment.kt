@@ -23,7 +23,7 @@ import kotlinx.serialization.protobuf.ProtoBuf
 import moe.ore.android.toast.Toast
 import moe.ore.protocol.SSOLoginMerge
 import moe.ore.script.Consist
-import moe.ore.txhook.R
+import com.shiinasign.R
 import moe.ore.txhook.app.CatchProvider
 import moe.ore.txhook.app.Md5Activity
 import moe.ore.txhook.app.PacketActivity
@@ -32,8 +32,8 @@ import moe.ore.txhook.app.TlvActivity
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.MQQ
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.QQLITE
 import moe.ore.txhook.app.fragment.MainFragment.Packet.CREATOR.TIM
-import moe.ore.txhook.databinding.FragmentMainBinding
-import moe.ore.txhook.databinding.ListElemBinding
+import com.shiinasign.databinding.FragmentMainBinding
+import com.shiinasign.databinding.ListElemBinding
 import moe.ore.txhook.forEachL
 import moe.ore.txhook.helper.EMPTY_BYTE_ARRAY
 import moe.ore.txhook.helper.FormatUtil
@@ -56,7 +56,7 @@ class MainFragment: Fragment() {
     lateinit var catchingAdapter: ArrayAdapter<Packet>
     lateinit var actionAdapter: ArrayAdapter<Action>
 
-    // 处于什么模式 0 抓sso 1 抓取行为
+    // 处于什么模�?0 抓sso 1 抓取行为
     var inMode: Int = 0
 
     override fun onCreateView(
@@ -184,7 +184,7 @@ class MainFragment: Fragment() {
 
             override fun clear() {
                 if (actionList.isNotEmpty()) {
-                    // 玩点小动画
+                    // 玩点小动�?
                     val hideAnimation: Animation = AlphaAnimation(1f, 0f)
                     hideAnimation.duration = 200
                     listView.startAnimation(hideAnimation)
@@ -232,7 +232,7 @@ class MainFragment: Fragment() {
 
             override fun clear() {
                 if (catchList.isNotEmpty()) {
-                    // 玩点小动画
+                    // 玩点小动�?
                     val hideAnimation: Animation = AlphaAnimation(1f, 0f)
                     hideAnimation.duration = 200
                     listView.startAnimation(hideAnimation)

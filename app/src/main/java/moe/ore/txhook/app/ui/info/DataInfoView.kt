@@ -19,7 +19,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
 import moe.ore.android.util.AndroidUtil.dip2px
-import moe.ore.txhook.R
+import com.shiinasign.R
 
 class DataInfoView@JvmOverloads constructor(
     context: Context,

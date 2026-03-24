@@ -25,10 +25,10 @@ import moe.ore.android.toast.Toast.toast
 import moe.ore.android.util.StatusBarUtil
 import moe.ore.script.Consist
 import moe.ore.txhook.EntryActivity
-import moe.ore.txhook.R
+import com.shiinasign.R
 import moe.ore.txhook.app.fragment.MainFragment
 import moe.ore.txhook.app.fragment.SettingFragment
-import moe.ore.txhook.databinding.ActivityMainBinding
+import com.shiinasign.databinding.ActivityMainBinding
 
 class MainActivity: EasyActivity() {
     lateinit var binding: ActivityMainBinding
@@ -145,7 +145,7 @@ class MainActivity: EasyActivity() {
 
     private fun exit() {
         if (isExit < 2) {
-            toast(msg = "再按一次退出应用")
+            toast(msg = "再按一次退出应�?)
             exitHandler.sendEmptyMessageDelayed(0, 2000)
         } else {
             finish()

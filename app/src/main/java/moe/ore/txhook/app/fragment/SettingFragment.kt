@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import moe.ore.android.dialog.Dialog
 import moe.ore.android.toast.Toast
 import moe.ore.android.util.FuckSettingItem
-import moe.ore.txhook.databinding.FragmentSettingBinding
+import com.shiinasign.databinding.FragmentSettingBinding
 import moe.ore.xposed.utils.PrefsManager
 import moe.ore.xposed.utils.PrefsManager.KEY_PUSH_API
 
@@ -44,7 +44,7 @@ class SettingFragment: Fragment() {
                         Toast.toast(requireContext(), "Push服务配置成功")
                         FuckSettingItem.turnSettingSwitch(binding.pushApi, true)
                     }
-                    .setFloatingText("请输入你自己的Domain：")
+                    .setFloatingText("请输入你自己的Domain�?)
                     .setHint("192.168.31.63:6779")
                     .setPositiveButton("确定") { dialog, _ ->
                         dialog.dismiss()
@@ -53,9 +53,9 @@ class SettingFragment: Fragment() {
                     }
                     .show()
             } else {
-                addressText.text = "未配置服务"
+                addressText.text = "未配置服�?
                 PrefsManager.setString(KEY_PUSH_API, "")
-                Toast.toast(requireContext(), "Push服务已关闭")
+                Toast.toast(requireContext(), "Push服务已关�?)
             }
         }
     }

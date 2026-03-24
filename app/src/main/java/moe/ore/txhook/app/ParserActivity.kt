@@ -5,9 +5,9 @@ import androidx.core.content.res.ResourcesCompat
 import moe.ore.android.EasyActivity
 import moe.ore.android.toast.Toast
 import moe.ore.android.util.StatusBarUtil
-import moe.ore.txhook.R
+import com.shiinasign.R
 import moe.ore.txhook.app.fragment.MainFragment
-import moe.ore.txhook.databinding.ActivityParserBinding
+import com.shiinasign.databinding.ActivityParserBinding
 import moe.ore.txhook.helper.parser.ProtobufParser
 import moe.ore.txhook.helper.parser.TarsParser
 import moe.ore.txhook.helper.toByteReadPacket

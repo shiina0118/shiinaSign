@@ -11,11 +11,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.serialization.ExperimentalSerializationApi
 import moe.ore.android.EasyActivity
 import moe.ore.android.util.StatusBarUtil
-import moe.ore.txhook.R
+import com.shiinasign.R
 import moe.ore.txhook.app.fragment.MainFragment
 import moe.ore.txhook.app.fragment.PacketHexFragment
-import moe.ore.txhook.databinding.ActivityPacketBinding
-import moe.ore.txhook.databinding.FragmentPacketInfoBinding
+import com.shiinasign.databinding.ActivityPacketBinding
+import com.shiinasign.databinding.FragmentPacketInfoBinding
 import moe.ore.txhook.helper.toHexString
 
 @ExperimentalSerializationApi

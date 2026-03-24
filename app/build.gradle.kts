@@ -32,6 +32,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 
     kotlinOptions {
@@ -57,10 +58,20 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // Protobuf 依赖
-    implementation("com.google.protobuf:protobuf-javalite:3.24.0")
+    implementation("com.google.protobuf:protobuf-java:3.24.0")
 
     // kotlinx.serialization 依赖
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.3")
+
+    // OkHttp 依赖
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // kotlinx-io 依赖
+    implementation("org.jetbrains.kotlinx:kotlinx-io-jvm:0.1.16")
+
+    // MaterialEditText 依赖
+    implementation("com.rengwuxian.materialedittext:library:2.1.4")
 
     // EzXHelper 依赖 (3.x 拆分模块)
     implementation("io.github.kyuubiran.ezxhelper:core:3.0.1")

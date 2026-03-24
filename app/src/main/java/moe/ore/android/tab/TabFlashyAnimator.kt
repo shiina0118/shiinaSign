@@ -20,7 +20,7 @@ import androidx.viewpager.widget.ViewPager.INVISIBLE
 import androidx.viewpager.widget.ViewPager.VISIBLE
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import moe.ore.txhook.R
+import com.shiinasign.R
 
 class TabFlashyAnimator(private var tabLayout: TabLayout?, private val selectedColor: Int) : ViewPager2.OnPageChangeCallback() {
     private val mFragmentTitleList: MutableList<String> = ArrayList()

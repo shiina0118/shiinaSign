@@ -8,12 +8,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.serialization.ExperimentalSerializationApi
 import moe.ore.android.EasyActivity
 import moe.ore.android.util.StatusBarUtil
-import moe.ore.txhook.R
+import com.shiinasign.R
 import moe.ore.txhook.app.fragment.MainFragment
 import moe.ore.txhook.app.fragment.PacketHexFragment
 import moe.ore.txhook.app.fragment.PacketInfoFragment
 import moe.ore.txhook.app.fragment.ParserFragment
-import moe.ore.txhook.databinding.ActivityPacketBinding
+import com.shiinasign.databinding.ActivityPacketBinding
 
 
 class PacketActivity: EasyActivity() {
@@ -62,7 +62,7 @@ class PacketActivity: EasyActivity() {
             val menuItems: MutableList<MenuItem> = ArrayList()
             menuItems.add(MenuItem(R.drawable.icon_catch, "分享出去"))
             menuItems.add(MenuItem(R.drawable.ic_baseline_save_24, "保存文件"))
-            // menuItems.add(MenuItem(R.drawable.met_ic_clear, "扫一扫"))
+            // menuItems.add(MenuItem(R.drawable.met_ic_clear, "扫一�?))
 
             mTopRightMenu
                 .setHeight(800) //默认高度480
