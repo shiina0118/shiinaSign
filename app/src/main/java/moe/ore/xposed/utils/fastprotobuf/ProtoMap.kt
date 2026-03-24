@@ -97,3 +97,65 @@ class ProtoMap(
         struct.invoke(map)
         set(*tags, v = map)
     }
+
+    operator fun set(vararg tags: Int, v: String) {
+        set(*tags, v = v.proto)
+    }
+
+    operator fun set(vararg tags: Int, v: ByteArray) {
+        set(*tags, v = v.proto)
+    }
+
+    operator fun set(vararg tags: Int, v: Number) {
+        set(*tags, v = v.proto)
+    }
+
+    operator fun set(vararg tags: Int, v: ByteString) {
+        set(*tags, v = v.proto)
+    }
+
+    operator fun set(vararg tags: Int, v: Any) {
+        set(*tags, v = ProtoUtils.any2proto(v))
+    }
+
+    override fun toJson(): JsonElement {
+        val hashMap = hashMapOf<String, JsonElement>()
+        value.forEach { (tag, field) ->
+            hashMap[tag.toString()] = field.toJson()
+        }
+        return hashMap.jsonObject
+    }
+
+    override fun computeSize(tag: Int): Int {
+        var size = CodedOutputStream.computeTagSize(tag)
+        val dataSize = computeSizeDirectly()
+        size += ProtoUtils.computeRawVarint32Size(dataSize)
+        size += dataSize
+        return size
+    }
+
+    override fun writeTo(output: CodedOutputStream, tag: Int) {
+        output.writeTag(tag, WireFormat.WIRETYPE_LENGTH_DELIMITED)
+        val dataSize = computeSizeDirectly()
+        output.writeUInt32NoTag(dataSize)
+        value.forEach { (tag, proto) ->
+            proto.writeTo(output, tag)
+        }
+    }
+
+    override fun computeSizeDirectly(): Int {
+        var size = 0
+        value.forEach { (tag, proto) ->
+            size += proto.computeSize(tag)
+        }
+        return size
+    }
+
+    override fun toString(): String {
+        return toJson().toString()
+    }
+
+    fun toByteArray(): ByteArray {
+        return ProtoUtils.encodeToByteArray(this)
+    }
+}

@@ -11,7 +11,7 @@ import moe.ore.xposed.hook.base.modulePath
 import moe.ore.xposed.hook.base.moduleRes
 import moe.ore.xposed.hook.enums.QQTypeEnum
 
-const val TAG = "shiinaSign"
+const val TAG = "TXHook"
 
 class HookEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
 

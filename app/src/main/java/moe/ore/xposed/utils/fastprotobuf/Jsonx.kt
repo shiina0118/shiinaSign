@@ -98,3 +98,10 @@ inline val JsonElement?.asJsonObject: JsonObject
     get() = this!!.jsonObject
 
 inline val JsonElement?.asJsonObjectOrNull: JsonObject?
+    get() = this?.jsonObject
+
+inline val JsonElement?.asJsonArray: JsonArray
+    get() = this!!.jsonArray
+
+inline val JsonElement?.asJsonArrayOrNull: JsonArray?
+    get() = this?.jsonArray
