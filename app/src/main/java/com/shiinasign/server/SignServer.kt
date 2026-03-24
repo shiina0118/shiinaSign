@@ -86,7 +86,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
                 val appClass = Class.forName("com.tencent.common.app.BaseApplicationImpl")
                 val field = appClass.declaredFields.first { it.type == appClass }
                 field.isAccessible = true
-                field.get(null) as? android.content.Context
+                field.get(null) as android.content.Context
             } catch (e: Exception) {
                 throw IllegalStateException("Cannot get QQ Context: ${e.message}")
             }
