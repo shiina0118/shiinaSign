@@ -1,0 +1,23 @@
+# Build outputs
+*.apk
+*.ap_
+*.dex
+*.class
+gen/
+build/
+out/
+local.properties
+
+# IDE
+.idea/
+*.iml
+.gradle/
+*.swp
+
+# Source references (not part of the build)
+QQHook-3.3.0/
+OpenShamrock-master/
+
+# OS
+.DS_Store
+Thumbs.db

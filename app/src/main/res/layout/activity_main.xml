@@ -1,67 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".app.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="20dp"
-        android:background="@color/white">
+        android:text="shiinaSign"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:title="@string/app_name"
-            android:subtitle="I’m QQ，每一天，乐在沟通。"
-            app:titleTextColor="@android:color/black"
-            app:subtitleTextColor="@android:color/darker_gray"
-            app:titleMarginTop="10dp"
-            tools:ignore="HardcodedText" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorHeight="3dp"
-            app:tabGravity="center"
-            app:tabIndicatorAnimationMode="linear"
-            app:tabMode="auto" />
-
-    </LinearLayout>
-
-    <RelativeLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:hint="HTTP 端口"
+        android:layout_marginBottom="16dp">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="16dp"
-            app:backgroundTint="@color/accent"
-            app:borderWidth="0dp"
-            app:srcCompat="@drawable/icon_nocatch"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            tools:ignore="ContentDescription" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_port"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="7878" />
 
-    </RelativeLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_toggle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="启动 HTTP Server"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="状态: 未启动"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textColor="#666666" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="POST /sign\n参数: cmd, buffer(hex), seq, uin\n返回: { token, extra, sign } (hex)"
+        android:textSize="13sp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:textColor="#999999" />
 
 </LinearLayout>

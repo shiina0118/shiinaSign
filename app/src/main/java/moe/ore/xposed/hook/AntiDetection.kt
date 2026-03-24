@@ -1,13 +1,17 @@
 package moe.ore.xposed.hook
 
+import de.robv.android.xposed.XposedBridge
 import moe.ore.xposed.hook.base.hostPackageName
 import moe.ore.xposed.hook.base.hostVersionCode
-import moe.ore.xposed.hook.enums.QQTypeEnum
-import moe.ore.xposed.utils.QQ_9_1_90_26520
 import moe.ore.xposed.utils.QQ_9_2_10_29175
 import moe.ore.xposed.utils.XPClassloader.load
 import moe.ore.xposed.utils.hookMethod
 
+/**
+ * Anti-detection from TXHook.
+ * Forces QQ to use WTLogin (legacy) protocol instead of NT protocol,
+ * ensuring QQSecuritySign/Dandelion/ByteData signing APIs remain active.
+ */
 internal object AntiDetection {
 
     operator fun invoke() {
@@ -19,15 +23,17 @@ internal object AntiDetection {
         val configClass = load("com.tencent.freesia.UnitedConfig")
         configClass?.let {
             it.hookMethod("isSwitchOn")?.after { param ->
-                val tag = param.args[1] as String
+                val tag = param.args[1] as? String ?: return@after
                 when (tag) {
                     "msf_init_optimize", "msf_network_service_switch_new" -> {
-                        if (isSupportedDisablingNewService()) param.result = false
+                        if (isSupportedDisablingNewService()) {
+                            param.result = false
+                        }
                     }
                     "wt_login_upgrade" -> {
                         param.result = false
                     }
-                    "nt_login_downgrade" -> { // 强制降级到WT流程
+                    "nt_login_downgrade" -> {
                         param.result = true
                     }
                 }
@@ -41,14 +47,8 @@ internal object AntiDetection {
         }
     }
 
-    fun isSupportedQQVersion(packageName: String, versionCode: Long): Boolean {
-        return QQTypeEnum.valueOfPackage(packageName) == QQTypeEnum.QQ &&
-                versionCode in QQ_9_1_90_26520..QQ_9_2_10_29175
-    }
-
-    fun isSupportedDisablingNewService(): Boolean {
-        return (QQTypeEnum.valueOfPackage(hostPackageName) == QQTypeEnum.QQ &&
-                hostVersionCode <= QQ_9_2_10_29175) ||
-                QQTypeEnum.valueOfPackage(hostPackageName) == QQTypeEnum.TIM
+    private fun isSupportedDisablingNewService(): Boolean {
+        return (hostPackageName == "com.tencent.mobileqq" && hostVersionCode <= QQ_9_2_10_29175) ||
+                hostPackageName == "com.tencent.tim"
     }
 }

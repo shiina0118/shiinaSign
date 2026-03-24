@@ -1,0 +1,8 @@
+{
+  "id": "com.shiinasign",
+  "name": "shiinaSign",
+  "version": "1.0",
+  "description": "QQ getSign HTTP Server - provides /sign endpoint via NanoHTTPD",
+  "author": "shiinaSign",
+  "minApi": 24
+}
