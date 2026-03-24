@@ -7,9 +7,10 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 import moe.ore.xposed.hook.AntiDetection
-import moe.ore.xposed.hook.base.*
+import moe.ore.xposed.hook.base.hostClassLoader
+import moe.ore.xposed.hook.base.hostPackageName
+import moe.ore.xposed.hook.base.hostProcessName
 import moe.ore.xposed.utils.FuzzySearchClass
-import moe.ore.xposed.utils.XPClassloader
 import java.lang.reflect.Modifier
 
 class HookEntry : IXposedHookLoadPackage {
@@ -30,15 +31,11 @@ class HookEntry : IXposedHookLoadPackage {
         hostPackageName = lpparam.packageName
         hostProcessName = lpparam.processName
 
-        XPClassloader.ctxClassLoader = lpparam.classLoader
-
         val startup = object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 if (initialized) return
                 try {
                     val loader = param.thisObject.javaClass.classLoader!!
-                    XPClassloader.hostClassLoader = loader
-
                     val clz = loader.loadClass("com.tencent.common.app.BaseApplicationImpl")
                     val field = clz.declaredFields.first { it.type == clz }
                     field.isAccessible = true
@@ -98,46 +95,10 @@ class HookEntry : IXposedHookLoadPackage {
 
         XposedBridge.log("[shiinaSign] App startup detected: ${ctx.javaClass.name}, process: $hostProcessName")
 
-        // Inject module ClassLoader into QQ's chain
-        if (!injectClassloader()) {
-            XposedBridge.log("[shiinaSign] ClassLoader injection failed!")
-            return
-        }
-
-        // Run anti-detection in ALL processes
-        XposedBridge.log("[shiinaSign] Applying anti-detection...")
         AntiDetection()
 
-        // Only start HTTP server in main process (MSF process works but main is better for FEKit)
         XposedBridge.log("[shiinaSign] Starting sign server...")
         startSignServer()
-    }
-
-    private fun injectClassloader(): Boolean {
-        val moduleLoader = HookEntry::class.java.classLoader ?: return false
-
-        // Check if already injected
-        if (runCatching { moduleLoader.loadClass("mqq.app.MobileQQ") }.isSuccess) {
-            return true
-        }
-
-        return try {
-            // Create a bridge ClassLoader: module parent -> QQ's ClassLoader
-            val parentField = ClassLoader::class.java.getDeclaredField("parent")
-            parentField.isAccessible = true
-
-            // Set XPClassloader's parent to QQ's ClassLoader
-            val qqParent = XPClassloader.parent
-            parentField.set(XPClassloader, hostClassLoader)
-
-            // Inject XPClassloader as module's parent
-            parentField.set(moduleLoader, XPClassloader)
-
-            runCatching { Class.forName("mqq.app.MobileQQ") }.isSuccess
-        } catch (e: Exception) {
-            XposedBridge.log("[shiinaSign] ClassLoader injection error: ${e.message}")
-            false
-        }
     }
 
     private fun startSignServer() {
