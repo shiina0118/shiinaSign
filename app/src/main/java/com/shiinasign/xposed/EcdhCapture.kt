@@ -1,5 +1,7 @@
 package com.shiinasign.xposed
 
+import de.robv.android.xposed.XposedBridge
+
 /**
  * Stores captured ECDH parameters from native hook.
  * Written by JNI code when ECDH_compute_key is intercepted.
