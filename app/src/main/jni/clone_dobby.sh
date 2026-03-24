@@ -12,8 +12,8 @@ if [ -d "$DOBBY_DIR" ]; then
     exit 0
 fi
 
-echo "Cloning Dobby..."
-git clone --depth 1 https://github.com/jmpews/Dobby.git "$DOBBY_DIR"
+echo "Cloning Dobby (stable 'master' branch)..."
+git clone --depth 1 --branch master https://github.com/jmpews/Dobby.git "$DOBBY_DIR"
 
 if [ $? -eq 0 ]; then
     echo "Dobby cloned successfully to $DOBBY_DIR"
