@@ -46,8 +46,8 @@ dependencies {
     implementation("org.nanohttpd:nanohttpd:2.3.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
-    // Xposed API 依赖（如需其他版本请自行调整）
-    implementation("de.robv.android.xposed:api:82")
+    // Xposed API 本地 jar 依赖
+    implementation(files("libs/XposedBridgeAPI-82.jar"))
     // Gson 依赖
     implementation("com.google.code.gson:gson:2.10.1")
 
