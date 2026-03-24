@@ -51,6 +51,12 @@ dependencies {
     // Gson 依赖
     implementation("com.google.code.gson:gson:2.10.1")
 
+    // Protobuf 依赖
+    implementation("com.google.protobuf:protobuf-javalite:3.24.0")
+
+    // kotlinx.serialization 依赖
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.6")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
