@@ -1,7 +1,6 @@
 package com.shiinasign.server
 
 import com.google.gson.Gson
-import com.tencent.mobileqq.fe.FEKit
 import de.robv.android.xposed.XposedBridge
 import fi.iki.elonen.NanoHTTPD
 
@@ -22,6 +21,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
     }
 
     private fun handleSign(session: IHTTPSession): Response {
+        session.parseBody(mapOf())
         val params = session.parms
         val cmd = params["cmd"]
         val bufferHex = params["buffer"]
@@ -57,9 +57,9 @@ class SignServer(port: Int) : NanoHTTPD(port) {
                 ret = 0,
                 msg = "success",
                 data = SignData(
-                    token = result.token?.toHexString() ?: "",
-                    extra = result.extra?.toHexString() ?: "",
-                    sign = result.sign?.toHexString() ?: ""
+                    token = result.token,
+                    extra = result.extra,
+                    sign = result.sign
                 )
             )
             newFixedLengthResponse(Response.Status.OK, "application/json", gson.toJson(response))
@@ -74,16 +74,21 @@ class SignServer(port: Int) : NanoHTTPD(port) {
 
     companion object {
         /**
-         * Actively call FEKit.getSign via reflection.
-         * This works because the module ClassLoader has been injected into QQ's ClassLoader chain,
-         * so FEKit.getInstance() resolves to QQ's real implementation.
+         * Call FEKit.getSign via pure reflection.
+         * Avoids classloader conflict with stub classes.
          */
         fun doSign(cmd: String, buffer: ByteArray, seq: Int, uin: String): FEKitResult {
-            val feKit = FEKit.getInstance()
-                ?: throw IllegalStateException("FEKit.getInstance() returned null - is QQ running?")
+            val classLoader = Thread.currentThread().contextClassLoader
 
+            // FEKit.getInstance()
+            val feKitClass = classLoader.loadClass("com.tencent.mobileqq.fe.FEKit")
+            val getInstance = feKitClass.getDeclaredMethod("getInstance")
+            val feKit = getInstance.invoke(null)
+                ?: throw IllegalStateException("FEKit.getInstance() returned null")
+
+            // Get Context
             val context = try {
-                val appClass = Class.forName("com.tencent.common.app.BaseApplicationImpl")
+                val appClass = classLoader.loadClass("com.tencent.common.app.BaseApplicationImpl")
                 val field = appClass.declaredFields.first { it.type == appClass }
                 field.isAccessible = true
                 field.get(null) as android.content.Context
@@ -91,9 +96,9 @@ class SignServer(port: Int) : NanoHTTPD(port) {
                 throw IllegalStateException("Cannot get QQ Context: ${e.message}")
             }
 
-            // Get GUID via oicq.wlogin_sdk.tools.util.get_last_guid
+            // Get GUID
             val guid = try {
-                val utilClass = Class.forName("oicq.wlogin_sdk.tools.util")
+                val utilClass = classLoader.loadClass("oicq.wlogin_sdk.tools.util")
                 val method = utilClass.getDeclaredMethod("get_last_guid", android.content.Context::class.java)
                 method.isAccessible = true
                 val guidBytes = method.invoke(null, context) as ByteArray
@@ -102,18 +107,36 @@ class SignServer(port: Int) : NanoHTTPD(port) {
                 ""
             }
 
-            // QUA and QIMEI - best effort, not critical
-            val qua = ""
-            val qimei = ""
+            // Init FEKit
+            val initMethod = feKitClass.getDeclaredMethod(
+                "init",
+                android.content.Context::class.java,
+                String::class.java, String::class.java, String::class.java,
+                String::class.java, String::class.java
+            )
+            initMethod.invoke(feKit, context, uin, guid, "", "", "")
 
-            // Init FEKit and call getSign
-            feKit.init(context, uin, guid, "", qimei, qua)
-            val signResult = feKit.getSign(cmd, buffer, seq, uin)
+            // getSign
+            val getSignMethod = feKitClass.getDeclaredMethod(
+                "getSign",
+                String::class.java, ByteArray::class.java,
+                Int::class.javaPrimitiveType, String::class.java
+            )
+            val signResult = getSignMethod.invoke(feKit, cmd, buffer, seq, uin)
+
+            // Extract fields from SignResult
+            val resultClass = signResult.javaClass
+            val tokenField = resultClass.getDeclaredField("token")
+            val extraField = resultClass.getDeclaredField("extra")
+            val signField = resultClass.getDeclaredField("sign")
+            tokenField.isAccessible = true
+            extraField.isAccessible = true
+            signField.isAccessible = true
 
             return FEKitResult(
-                token = signResult.token,
-                extra = signResult.extra,
-                sign = signResult.sign
+                token = (tokenField.get(signResult) as? ByteArray)?.toHexString() ?: "",
+                extra = (extraField.get(signResult) as? ByteArray)?.toHexString() ?: "",
+                sign = (signField.get(signResult) as? ByteArray)?.toHexString() ?: ""
             )
         }
 
@@ -147,7 +170,7 @@ data class SignData(
 )
 
 data class FEKitResult(
-    val token: ByteArray?,
-    val extra: ByteArray?,
-    val sign: ByteArray?
+    val token: String,
+    val extra: String,
+    val sign: String
 )
