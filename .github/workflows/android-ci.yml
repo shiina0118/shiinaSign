@@ -27,23 +27,22 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew :app:assembleDebug --stacktrace 2>&1 | tee build.log
 
-      - name: Upload build log on failure
-        if: failure()
+      - name: Upload build log
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-log
           path: build.log
 
-      - name: List build outputs
+      - name: List APK files
         if: always()
-        run: find app/build/outputs -name "*.apk" 2>/dev/null || echo "No APK found in outputs dir"
+        run: find . -name "*.apk" -path "*/build/*" 2>/dev/null || echo "No APK files found"
 
       - name: Upload APK
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: |
             app/build/outputs/apk/**/*.apk
-            app/**/*.apk
-          if-no-files-found: warn
+          if-no-files-found: ignore
