@@ -28,7 +28,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
 
     private fun handleSign(session: IHTTPSession): Response {
         session.parseBody(mapOf())
-        val params = session.parms
+        val params = session.parameters
         val cmd = params["cmd"]
         val bufferHex = params["buffer"]
         val seqStr = params["seq"]
@@ -81,7 +81,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
     private fun handleQimei(session: IHTTPSession): Response {
         session.parseBody(mapOf())
 
-        val params = session.parms
+        val params = session.parameters
 
         // Check if custom device info is provided
         val hasDeviceInfo = params.keys.any { it in listOf(
@@ -150,6 +150,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
          */
         fun doSign(cmd: String, buffer: ByteArray, seq: Int, uin: String): FEKitResult {
             val classLoader = Thread.currentThread().contextClassLoader
+                ?: throw IllegalStateException("contextClassLoader is null")
 
             // FEKit.getInstance()
             val feKitClass = classLoader.loadClass("com.tencent.mobileqq.fe.FEKit")

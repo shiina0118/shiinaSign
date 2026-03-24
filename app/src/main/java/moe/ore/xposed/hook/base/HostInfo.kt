@@ -10,6 +10,7 @@ lateinit var hostProcessName: String
 
 val hostContext: Context get() = hostApp
 
+@Suppress("DEPRECATION")
 val hostVersionCode: Long by lazy {
     runCatching {
         val pi = hostApp.packageManager.getPackageInfo(hostPackageName, 0)
