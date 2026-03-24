@@ -1,62 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_vertical">
+    android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="shiinaSign"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="32dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="HTTP 端口"
-        android:layout_marginBottom="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_port"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:text="7878" />
+            android:text="shiinaSign"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="HTTP 端口"
+            android:layout_marginBottom="16dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_toggle"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="启动 HTTP Server"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="7878" />
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="状态: 未启动"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:textColor="#666666" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tv_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="POST /sign\n参数: cmd, buffer(hex), seq, uin\n返回: { token, extra, sign } (hex)"
-        android:textSize="13sp"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:textColor="#999999" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="启动 HTTP Server"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="状态: 未启动"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="━━━ ECDH Capture ━━━"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/et_ecdh"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="start|top"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:inputType="none"
+            android:focusable="false"
+            android:text="ECDH hook not initialized.\nInstall module and start QQ to capture."
+            android:textColor="#333333"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_refresh_ecdh"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Refresh ECDH Data"
+            android:textSize="14sp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Endpoints:\nPOST /sign — cmd, buffer, seq, uin\nGET  /qimei — get QIMEI\nPOST /qimei — custom device info\nGET  /ecdh — get captured ECDH data"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:textColor="#999999" />
+
+    </LinearLayout>
+</ScrollView>

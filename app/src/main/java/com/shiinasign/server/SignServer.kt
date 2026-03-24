@@ -2,6 +2,7 @@ package com.shiinasign.server
 
 import com.google.gson.Gson
 import com.shiinasign.xposed.DeviceInfo
+import com.shiinasign.xposed.EcdhCapture
 import com.shiinasign.xposed.QimeiHook
 import com.shiinasign.xposed.QimeiResult
 import de.robv.android.xposed.XposedBridge
@@ -19,6 +20,7 @@ class SignServer(port: Int) : NanoHTTPD(port) {
         return when (session.uri) {
             "/sign" -> handleSign(session)
             "/qimei" -> handleQimei(session)
+            "/ecdh" -> handleEcdh()
             "/ping" -> newFixedLengthResponse(Response.Status.OK, "application/json", """{"status":"ok"}""")
             else -> newFixedLengthResponse(Response.Status.NOT_FOUND, "application/json", """{"error":"not found"}""")
         }
@@ -125,6 +127,20 @@ class SignServer(port: Int) : NanoHTTPD(port) {
                 """{"ret":-1,"error":"${e.message?.replace("\"", "\\\"") ?: "unknown"}"}"""
             )
         }
+    }
+
+    private fun handleEcdh(): Response {
+        val capture = EcdhCapture
+        val response = mapOf(
+            "ret" to 0,
+            "initialized" to capture.initialized,
+            "capture_count" to capture.captureCount,
+            "last_capture_time" to capture.lastCaptureTime,
+            "shared_secret" to capture.sharedSecret,
+            "shared_secret_length" to capture.sharedSecretLength,
+            "server_public_key" to capture.serverPublicKey
+        )
+        return newFixedLengthResponse(Response.Status.OK, "application/json", gson.toJson(response))
     }
 
     companion object {

@@ -97,6 +97,7 @@ class HookEntry : IXposedHookLoadPackage {
 
         AntiDetection()
         QimeiHook()
+        initEcdhHook()
 
         XposedBridge.log("[shiinaSign] Starting sign server...")
         startSignServer()
@@ -110,6 +111,19 @@ class HookEntry : IXposedHookLoadPackage {
             XposedBridge.log("[shiinaSign] HTTP Server started on port $port")
         } catch (e: Exception) {
             XposedBridge.log("[shiinaSign] Failed to start HTTP server: ${e.message}")
+        }
+    }
+
+    private fun initEcdhHook() {
+        try {
+            // Dobby is statically linked into shiinaSign_native
+            System.loadLibrary("shiinaSign_native")
+            EcdhCapture.initialized = true
+            XposedBridge.log("[shiinaSign] ECDH hook initialized successfully")
+        } catch (e: UnsatisfiedLinkError) {
+            XposedBridge.log("[shiinaSign] ECDH hook init failed (NDK not built): ${e.message}")
+        } catch (e: Exception) {
+            XposedBridge.log("[shiinaSign] ECDH hook init failed: ${e.message}")
         }
     }
 }
